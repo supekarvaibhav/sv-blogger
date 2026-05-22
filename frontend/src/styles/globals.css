@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 32 40% 97%;
+  --foreground: 222 22% 16%;
+  --primary: 222 82% 50%;
+  --secondary: 18 90% 56%;
+  --muted: 220 14% 92%;
+  --muted-foreground: 220 8% 45%;
+  --border: 220 12% 86%;
+  --card: 0 0% 100%;
+  --accent: 260 40% 96%;
+  --accent-foreground: 222 22% 16%;
+}
+
+.dark {
+  --background: 222 24% 10%;
+  --foreground: 210 40% 98%;
+  --primary: 48 96% 58%;
+  --secondary: 14 100% 68%;
+  --muted: 222 16% 20%;
+  --muted-foreground: 215 18% 70%;
+  --border: 222 16% 24%;
+  --card: 222 18% 14%;
+  --accent: 224 18% 20%;
+  --accent-foreground: 210 40% 98%;
+}
+
+* {
+  @apply border-border;
+}
+
+body {
+  @apply bg-background text-foreground;
+  font-family: var(--font-sans);
+  background-image: radial-gradient(circle at top left, rgba(59, 130, 246, 0.08), transparent 55%),
+    radial-gradient(circle at 20% 20%, rgba(249, 115, 22, 0.08), transparent 45%);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+}
