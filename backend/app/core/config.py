@@ -1,3 +1,4 @@
+import json
 from functools import lru_cache
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -17,19 +18,28 @@ class Settings(BaseSettings):
     secret_key: str = Field(..., alias="SECRET_KEY")
     access_token_expire_minutes: int = Field(30, alias="ACCESS_TOKEN_EXPIRE_MINUTES")
     refresh_token_expire_days: int = Field(7, alias="REFRESH_TOKEN_EXPIRE_DAYS")
-    allowed_origins: list[str] = Field(
-        default_factory=lambda: ["http://localhost:3000"],
-        alias="ALLOWED_ORIGINS",
-    )
+    allowed_origins: str = Field("http://localhost:3000", alias="ALLOWED_ORIGINS")
     upload_dir: str = Field("uploads", alias="UPLOAD_DIR")
     rate_limit_per_minute: str = Field("60/minute", alias="RATE_LIMIT_PER_MINUTE")
 
     @field_validator("allowed_origins", mode="before")
     @classmethod
-    def split_origins(cls, value):
-        if isinstance(value, str):
-            return [item.strip() for item in value.split(",") if item.strip()]
+    def normalize_origins(cls, value):
+        if isinstance(value, list):
+            return ",".join(value)
         return value
+
+    @property
+    def allowed_origins_list(self) -> list[str]:
+        raw = self.allowed_origins.strip()
+        if raw.startswith("["):
+            try:
+                parsed = json.loads(raw)
+                if isinstance(parsed, list):
+                    return [str(item).strip() for item in parsed if str(item).strip()]
+            except json.JSONDecodeError:
+                pass
+        return [item.strip() for item in raw.split(",") if item.strip()]
 
 
 @lru_cache
