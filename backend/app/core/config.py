@@ -41,6 +41,17 @@ class Settings(BaseSettings):
                 pass
         return [item.strip() for item in raw.split(",") if item.strip()]
 
+    @property
+    def database_url_async(self) -> str:
+        url = self.database_url.strip()
+        if url.startswith("postgresql+asyncpg://"):
+            return url
+        if url.startswith("postgresql://"):
+            return url.replace("postgresql://", "postgresql+asyncpg://", 1)
+        if url.startswith("postgres://"):
+            return url.replace("postgres://", "postgresql+asyncpg://", 1)
+        return url
+
 
 @lru_cache
 def get_settings() -> Settings:
