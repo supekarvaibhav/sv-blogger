@@ -12,6 +12,7 @@
     "@hookform/resolvers": "3.9.0",
     "@reduxjs/toolkit": "2.2.6",
     "@uiw/react-md-editor": "4.0.5",
+    "@uiw/react-markdown-preview": "4.0.5",
     "axios": "1.7.2",
     "clsx": "2.1.1",
     "framer-motion": "11.2.12",

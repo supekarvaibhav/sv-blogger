@@ -1,8 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import "@uiw/react-md-editor/dist/markdown-editor.css";
-import "@uiw/react-md-editor/dist/markdown-preview.css";
+import "@uiw/react-md-editor/dist/mdeditor.css";
+import "@uiw/react-markdown-preview/dist/markdown-preview.css";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
