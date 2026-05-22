@@ -25,11 +25,18 @@ export function BlogExplorer() {
     const load = async () => {
       setLoading(true);
       try {
-        const data = await fetchBlogs({
+        const params: Record<string, string | number> = {
           page,
-          limit: 6,
-          q: debounced || undefined,
-          category: category === "All" ? undefined : category
+          limit: 6
+        };
+        if (debounced) {
+          params.q = debounced;
+        }
+        if (category !== "All") {
+          params.category = category;
+        }
+        const data = await fetchBlogs({
+          ...params
         });
         setBlogs(data.items);
         setTotal(data.total);
